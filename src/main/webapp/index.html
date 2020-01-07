@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!--<base href="#"> <!--Change this if you change url in META-INF/context.xml shit dont work--> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="index.css">
+    </head>
+    <body>
+        <h1>Starter Code Backend</h1>
+        <h4><i>(Deploy the backend before the frontend)</i></h4>
+
+        <span>
+            Follow the guide in the 
+            <a href="https://github.com/MalteMagnussen/CA3/blob/master/src/README.md" target="blank">repository README.md</a>.
+        </span><br/>
+        <h5>File overview</h5>
+        <h6>src.cors</h6>
+        <ul class="border border-secondary customBorder"><li>Handles CORS-filters</li></ul>
+        <h6>src.enitites</h6>
+        <ul class="border border-secondary customBorder"><li>Handles project entities (if any)</li><ul><li>Includes Role, User for testing hashing</li></ul></ul>
+        <h6>src.errorhandling</h6>
+        <ul class="border border-secondary customBorder"><li>Handles errors through DTOs and mappers</li></ul>
+        <h6>src.facades</h6>
+        <ul class="border border-secondary customBorder"><li>Contains facades for user and API handling</li></ul>
+        <h6>src.rest</h6>
+        <ul class="border border-secondary customBorder"><li>Handles API endpoints, included are:</li>
+            <ul><li>User (dependant on role) login</li></ul>
+            <ul><li>The combined 5 endpoints from SWAPI</li></ul>
+        </ul>
+        <h6>src.security</h6>
+        <ul class="border border-secondary customBorder"><li>Handles JWT, SecurityContext and RolesAlloved for certain endpoints</li></ul>
+        <h6>src.utils</h6>
+        <ul class="border border-secondary customBorder"><li>Handles database and <ins>user setup*</ins></li></ul> 
+        <p id="importantP">*It is important to run this script once and not to push it, read the readme for more info.</p>
+        <h6>src.main/resources/config.properties</h6>
+        <ul class="border border-secondary customBorder"><li>.properties file that handles local/remote database setup</li></ul><br/>
+        <h5>Default endpoints</h5><br/>
+        <ul class="border border-secondary customBorder">
+            <li>Server status: <a href="api/info/">api/info/</a></li>
+            <li>Count all users: <a href="api/info/all">api/info/all</a></li>
+        </ul><br/>
+        <h5>Endpoints continued</h5>
+        <h6>(requires login - use frontend)</h6>
+        <ul class="border border-secondary customBorder">
+            <li>Star Wars API: Five endpoints in one: <a href="api/info/five">api/info/five</a> </li>
+             <li>User role endpoint: <a href="api/info/user">api/info/user</a></li>
+             <li>Admin role endpoint: <a href="api/info/user">api/info/admin</a></li>
+             <li>Admin & User role endpoint (either or): <a href="api/info/both">api/info/admin</a></li>
+             <li style="text-decoration: line-through">SuperUser endpoint (experimental, deprecated): <a href="api/info/both">api/info/bothrestricted</a></li>
+        </ul>
+
+    </body>
+</html>
