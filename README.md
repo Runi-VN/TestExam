@@ -9,7 +9,7 @@
 
 ### Status
 
-![Travis Image](https://travis-ci.org/MalteMagnussen/CA3.svg?branch=master)
+![Travis Image](https://travis-ci.org/HrBjarup/testexam1.svg?branch=master)
 
 ### Contributors
  * [Camilla Jenny Valerius Staunstrup](https://github.com/Castau)
