@@ -9,17 +9,28 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Hobby.getAll", query = "SELECT h FROM Hobby h"),
+    @NamedQuery(name = "Hobby.deleteAllRows", query = "DELETE FROM Hobby"),
+    @NamedQuery(name = "Hobby.getHobbyByName", query = "SELECT h FROM Hobby h WHERE h.name = :name"),
+    @NamedQuery(name = "Hobby.getHobbyByPhone", query = "SELECT p FROM Person p WHERE p.phone = :phone"),
+    @NamedQuery(name = "Hobby.getHobbyByEmail", query = "SELECT p FROM Person p WHERE p.email = :email"),
+    @NamedQuery(name = "Hobby.getHobbiesByHobby", query = "SELECT p FROM Person p JOIN p.hobbies h WHERE h.name = :name")
+})
 public class Hobby implements Serializable
 {
 
@@ -28,7 +39,10 @@ public class Hobby implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    private String name, description;
+    @Column(unique=true)
+    private String name;
+    
+    private String description;
     
     @ManyToMany(mappedBy = "hobbies")
     private List<Person> persons = new ArrayList();
