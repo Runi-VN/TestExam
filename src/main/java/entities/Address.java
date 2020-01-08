@@ -5,6 +5,8 @@
  */
 package entities;
 
+import dto.AddressDTO;
+import dto.PersonDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -20,86 +24,85 @@ import javax.persistence.OneToMany;
  * @author
  */
 @Entity
-public class Address implements Serializable
-{
+@NamedQueries({
+    @NamedQuery(name = "Address.deleteAllRows", query = "DELETE FROM Address"),
+    @NamedQuery(name = "Address.all", query = "SELECT a FROM Address a"),
+    @NamedQuery(name = "Address.specific", query = "SELECT a FROM Address a WHERE a.street= :street AND a.city= :city AND a.zip= :zip")})
+public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     private String street, city;
     private int zip;
-    
+
     @OneToMany(mappedBy = "address")
     private List<Person> persons = new ArrayList();
 
-    public Address()
-    {
+    public Address() {
     }
 
-    public Address(String street, String city, int zip, List<Person> persons)
-    {
+    public Address(String street, String city, int zip, List<Person> persons) {
         this.street = street;
         this.city = city;
         this.zip = zip;
         this.persons = persons;
     }
-    
 
-    public Integer getId()
-    {
+    public Address(AddressDTO residence) {
+        this.id = residence.getId();
+        this.street = residence.getRoad();
+        this.city = residence.getTown();
+        this.zip = residence.getZipcode();
+        for (PersonDTO person : residence.getResidents()) {
+            this.persons.add(new Person(person));
+        }
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id)
-    {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getStreet()
-    {
+    public String getStreet() {
         return street;
     }
 
-    public void setStreet(String street)
-    {
+    public void setStreet(String street) {
         this.street = street;
     }
 
-    public String getCity()
-    {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(String city)
-    {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public int getZip()
-    {
+    public int getZip() {
         return zip;
     }
 
-    public void setZip(int zip)
-    {
+    public void setZip(int zip) {
         this.zip = zip;
     }
 
-    public List<Person> getPersons()
-    {
+    public List<Person> getPersons() {
         return persons;
     }
 
-    public void setPersons(List<Person> persons)
-    {
+    public void setPersons(List<Person> persons) {
         this.persons = persons;
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int hash = 5;
         hash = 79 * hash + Objects.hashCode(this.street);
         hash = 79 * hash + Objects.hashCode(this.city);
@@ -109,46 +112,35 @@ public class Address implements Serializable
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-        {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (obj == null)
-        {
+        if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass())
-        {
+        if (getClass() != obj.getClass()) {
             return false;
         }
         final Address other = (Address) obj;
-        if (this.zip != other.zip)
-        {
+        if (this.zip != other.zip) {
             return false;
         }
-        if (!Objects.equals(this.street, other.street))
-        {
+        if (!Objects.equals(this.street, other.street)) {
             return false;
         }
-        if (!Objects.equals(this.city, other.city))
-        {
+        if (!Objects.equals(this.city, other.city)) {
             return false;
         }
-        if (!Objects.equals(this.persons, other.persons))
-        {
+        if (!Objects.equals(this.persons, other.persons)) {
             return false;
         }
         return true;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Address{" + "id=" + id + ", street=" + street + ", city=" + city + ", zip=" + zip + ", persons=" + persons + '}';
     }
 
-
-    
 }

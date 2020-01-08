@@ -5,6 +5,7 @@
  */
 package entities;
 
+import dto.PersonDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,14 @@ public class Person implements Serializable
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+    }
+
+    public Person(PersonDTO person) {
+        this.id = person.getId();
+        this.email = person.getMail();
+        this.firstName = person.getfName();
+        this.lastName = person.getlName();
+        this.address = new Address(person.getResidence());
     }
 
     public Integer getId()
