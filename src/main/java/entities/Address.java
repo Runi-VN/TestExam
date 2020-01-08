@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,12 +34,12 @@ public class Address implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id = 0;
 
     private String street, city;
     private int zip;
 
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address", cascade = CascadeType.PERSIST)
     private List<Person> persons = new ArrayList();
 
     public Address() {
@@ -50,6 +51,12 @@ public class Address implements Serializable {
         this.zip = zip;
         this.persons = persons;
     }
+    
+    public Address(String street, String city, int zip) {
+        this.street = street;
+        this.city = city;
+        this.zip = zip;
+    }
 
     public Address(AddressDTO residence) {
         this.id = residence.getId();
@@ -59,6 +66,10 @@ public class Address implements Serializable {
         for (PersonDTO person : residence.getResidents()) {
             this.persons.add(new Person(person));
         }
+    }
+    
+    public void addPerson(Person p) {
+        this.persons.add(p);
     }
 
     public Integer getId() {

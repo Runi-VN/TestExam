@@ -37,6 +37,10 @@ public class AddressDTO
             residents.add(new PersonDTO(p));
         }
     }
+    
+    public void addPersonDTO(PersonDTO p) {
+        this.residents.add(p);
+    }
 
     public int getId()
     {

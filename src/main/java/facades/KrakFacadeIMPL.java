@@ -53,14 +53,10 @@ public class KrakFacadeIMPL implements KrakFacadeInterface {
         EntityManager em = getEntityManager();
         try {
             return new PersonDTO(em.createNamedQuery("Person.getPersonByID", Person.class).setParameter("id", id).getSingleResult());
-        } catch (NoResultException e) {
-            em.getTransaction().rollback();
+        } catch (IllegalArgumentException e) {
             throw new WebApplicationException("No user with that ID exists", 404);
         } catch (Exception ex) {
-            em.getTransaction().rollback();
             throw new WebApplicationException(ex.getMessage(), 400);
-        } finally {
-            em.close();
         }
     }
 
@@ -213,8 +209,8 @@ public class KrakFacadeIMPL implements KrakFacadeInterface {
                     .setParameter("zip", address.getZipcode())
                     .setParameter("city", address.getTown()).getSingleResult();
         } catch (NoResultException e) {
+            return null;
         }
-        return null;
     }
 
     @Override
@@ -286,7 +282,7 @@ public class KrakFacadeIMPL implements KrakFacadeInterface {
             em.getTransaction().begin();
             em.remove(result);
             em.getTransaction().commit();
-            return new PersonDTO(result); 
+            return new PersonDTO(result);
         } catch (IllegalArgumentException e) {
             em.getTransaction().rollback();
             throw new WebApplicationException("Person does not comply with database standards", 400);
@@ -297,5 +293,4 @@ public class KrakFacadeIMPL implements KrakFacadeInterface {
             em.close();
         }
     }
-
 }

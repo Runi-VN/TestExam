@@ -35,6 +35,10 @@ public class HobbyDTO
             people.add(new PersonDTO(p));
         }
     }
+    
+    public void addPersonDTO(PersonDTO p) {
+        this.people.add(p);
+    }
 
     public int getId()
     {
