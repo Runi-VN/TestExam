@@ -391,7 +391,7 @@ public class KrakFacadeIMPL implements KrakFacadeInterface {
             System.out.println("_____________________________________");
             e.printStackTrace();
             System.out.println("_____________________________________");
-            em.getTransaction().rollback();
+            //em.getTransaction().rollback();
             return false;
         } finally {
             em.close();
