@@ -21,7 +21,7 @@ public interface KrakFacadeInterface
 
     public PersonDTO getPersonByPhone (String phone);
     
-    public List<PersonDTO> getPersonsByHobby (HobbyDTO hobby);
+    public List<PersonDTO> getPersonsByHobby (String hobbyName);
     
     public List<HobbyDTO> getAllHobbies ();
     

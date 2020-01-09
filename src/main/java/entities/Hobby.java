@@ -5,10 +5,13 @@
  */
 package entities;
 
+import dto.HobbyDTO;
+import dto.PersonDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,75 +31,77 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "Hobby.deleteAllRows", query = "DELETE FROM Hobby"),
     @NamedQuery(name = "Hobby.getHobbyByName", query = "SELECT h FROM Hobby h WHERE h.name = :name")
 })
-public class Hobby implements Serializable
-{
+public class Hobby implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    
-    @Column(unique=true)
+    private Integer id = 0;
+
+    @Column(unique = true)
     private String name;
-    
+
     private String description;
-    
-    @ManyToMany(mappedBy = "hobbies")
+
+    @ManyToMany(mappedBy = "hobbies", cascade = CascadeType.PERSIST)
     private List<Person> persons = new ArrayList();
 
-    public Hobby(){
-        
+    public Hobby() {
+
     }
 
-    public Hobby(String name, String description)
-    {
+    public Hobby(String name, String description) {
         this.name = name;
         this.description = description;
     }
-    
-    public Integer getId()
-    {
+
+    public Hobby(HobbyDTO hobby) {
+        this.id = hobby.getId();
+        this.name = hobby.getHobbyName();
+        this.description = hobby.getHobbyDescription();
+        for (PersonDTO person : hobby.getPeople()) {
+            this.persons.add(new Person(person));
+        }
+    }
+
+    public void addPerson(Person p) {
+        this.persons.add(p);
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id)
-    {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description)
-    {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public List<Person> getPersons()
-    {
+    public List<Person> getPersons() {
         return persons;
     }
 
-    public void setPersons(List<Person> persons)
-    {
+    public void setPersons(List<Person> persons) {
         this.persons = persons;
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int hash = 7;
         hash = 41 * hash + Objects.hashCode(this.name);
         hash = 41 * hash + Objects.hashCode(this.description);
@@ -105,41 +110,32 @@ public class Hobby implements Serializable
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-        {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (obj == null)
-        {
+        if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass())
-        {
+        if (getClass() != obj.getClass()) {
             return false;
         }
         final Hobby other = (Hobby) obj;
-        if (!Objects.equals(this.name, other.name))
-        {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.description, other.description))
-        {
+        if (!Objects.equals(this.description, other.description)) {
             return false;
         }
-        if (!Objects.equals(this.persons, other.persons))
-        {
+        if (!Objects.equals(this.persons, other.persons)) {
             return false;
         }
         return true;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Hobby{" + "id=" + id + ", name=" + name + ", description=" + description + ", persons=" + persons + '}';
     }
 
-    
 }

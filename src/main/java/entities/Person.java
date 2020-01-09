@@ -5,10 +5,13 @@
  */
 package entities;
 
+import dto.HobbyDTO;
+import dto.PersonDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,12 +40,12 @@ public class Person implements Serializable
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id = 0;
     
     private String email, phone, firstName, lastName;
-    @ManyToMany
+    @ManyToMany( cascade = CascadeType.PERSIST)
     private List<Hobby> hobbies = new ArrayList();
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
 
     public Person()
@@ -56,6 +59,22 @@ public class Person implements Serializable
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+    }
+
+    public Person(PersonDTO person) {
+        this.id = person.getId();
+        this.email = person.getMail();
+        this.phone = person.getTelephone();
+        this.firstName = person.getfName();
+        this.lastName = person.getlName();
+        this.address = new Address(person.getResidence());
+        for (HobbyDTO hobby : person.getHobbylist()) {
+            hobbies.add(new Hobby(hobby));
+        }
+    }
+    
+    public void addHobby(Hobby h) {
+        this.hobbies.add(h);
     }
 
     public Integer getId()

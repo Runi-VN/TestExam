@@ -40,6 +40,9 @@ public class PersonDTO
         }
     }
 
+    public void addHobbyDTO(HobbyDTO h) {
+        this.hobbylist.add(h);
+    }
     
     public int getId()
     {
