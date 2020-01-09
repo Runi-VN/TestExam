@@ -160,7 +160,7 @@ public class KrakFacadeIMPLTest {
         expResult.add(new PersonDTO(p1));
         expResult.add(new PersonDTO(p2));
         expResult.add(new PersonDTO(p4));
-        List<PersonDTO> result = facade.getPersonsByHobby(new HobbyDTO(h2));
+        List<PersonDTO> result = facade.getPersonsByHobby(h2.getName());
 
         assertThat("Comparing two lists of people by Hobby", result, containsInAnyOrder(expResult.toArray()));
     }

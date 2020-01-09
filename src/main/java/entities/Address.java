@@ -39,7 +39,7 @@ public class Address implements Serializable {
     private String street, city;
     private int zip;
 
-    @OneToMany(mappedBy = "address", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "address") //, cascade = CascadeType.PERSIST 
     private List<Person> persons = new ArrayList();
 
     public Address() {
