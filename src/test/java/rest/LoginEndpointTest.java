@@ -119,6 +119,7 @@ public class LoginEndpointTest {
         given().when().get("/info").then().statusCode(200);
     }
 
+    @Disabled
     @Test
     public void testFiveSwapi() {
         login("admin", "test");
