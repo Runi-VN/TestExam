@@ -11,6 +11,8 @@ import dto.PersonDTO;
 import entities.Address;
 import entities.Hobby;
 import entities.Person;
+import entities.Role;
+import entities.User;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityExistsException;
@@ -226,8 +228,8 @@ public class KrakFacadeIMPL implements KrakFacadeInterface {
             Address check = checkAddress(person.getResidence(), em);
             if (check != null) {
                 result.setAddress(check);
-            } else {
-                em.persist(new Address(person.getResidence()));
+            } else { // This isn't necessary, since we have CascadeType.PERSIST
+//                em.persist(new Address(person.getResidence()));
             }
             em.persist(result);
             em.getTransaction().commit();
@@ -293,4 +295,107 @@ public class KrakFacadeIMPL implements KrakFacadeInterface {
             em.close();
         }
     }
+
+    public boolean populate() {
+        EntityManager em = getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
+            em.createNamedQuery("User.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Role.deleteAllRows").executeUpdate();
+            em.getTransaction().commit();
+        
+            em.getTransaction().begin();
+
+            Person p1;
+            Person p2;
+            Person p3;
+            Person p4;
+            Hobby h1;
+            Hobby h2;
+            Hobby h3;
+            Hobby h4;
+            Hobby h5;
+            Address a1;
+            Address a2;
+            Address a3;
+
+            a1 = new Address("Jyskvej 1", "Vejle", 2100);
+            a2 = new Address("Mindevej 44", "Aalborg", 9000);
+            a3 = new Address("Silkeborgvej 22", "Silkeborg", 8600);
+
+            p1 = new Person("p1@p1.dk", "12345678", "Lars", "Larsen", a1);
+            p2 = new Person("p2@p2.dk", "82067263", "Marete", "Larsen", a1);
+            p3 = new Person("p3@p3.dk", "84673666", "Kim", "Larsen", a2);
+            p4 = new Person("p4@p4.dk", "55555555", "Fætter Johnny", "Larsen", a3);
+
+            h1 = new Hobby("Lacrosse", "Rich people");
+            h2 = new Hobby("Golf", "Very Rich People");
+            h3 = new Hobby("Running", "Poor people");
+            h4 = new Hobby("Swimming", "Old people");
+            h5 = new Hobby("Jumping", "Small people");
+
+            p1.addHobby(h1);
+            p1.addHobby(h2);
+            p1.addHobby(h3);
+
+            p2.addHobby(h1);
+            p2.addHobby(h2);
+            p2.addHobby(h4);
+
+            p3.addHobby(h5);
+
+            p4.addHobby(h1);
+            p4.addHobby(h2);
+            p4.addHobby(h3);
+            p4.addHobby(h4);
+
+            Role userRole = new Role("user");
+            Role adminRole = new Role("admin");
+            User user = new User("user", "test");
+            user.addRole(userRole);
+            User admin = new User("admin", "test");
+            admin.addRole(adminRole);
+            User both = new User("user_admin", "test");
+            both.addRole(userRole);
+            both.addRole(adminRole);
+            User nobody = new User("nobody", "test"); //no role connected
+            em.persist(userRole);
+            em.persist(adminRole);
+            em.persist(user);
+            em.persist(admin);
+            em.persist(both);
+            em.persist(nobody);
+            System.out.println("Saved test data to database");
+            // Users end
+
+            em.persist(a1);
+            em.persist(a2);
+            em.persist(a3);
+            em.persist(h1);
+            em.persist(h2);
+            em.persist(h3);
+            em.persist(h4);
+            em.persist(h5);
+            em.persist(p1);
+            em.persist(p2);
+            em.persist(p3);
+            em.persist(p4);
+            em.getTransaction().commit();
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("_____________________________________");
+            e.printStackTrace();
+            System.out.println("_____________________________________");
+            em.getTransaction().rollback();
+            return false;
+        } finally {
+            em.close();
+        }
+    }
+
 }

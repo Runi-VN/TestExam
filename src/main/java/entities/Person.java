@@ -45,7 +45,7 @@ public class Person implements Serializable
     private String email, phone, firstName, lastName;
     @ManyToMany( cascade = CascadeType.PERSIST)
     private List<Hobby> hobbies = new ArrayList();
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Address address;
 
     public Person()

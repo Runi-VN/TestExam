@@ -3,4 +3,4 @@
 //and import this file whereever you need the URL
 
 export const localURL = "http://localhost:8080/securitystarter";
-export const onlineURL = "https://www.maltemagnussen.com/CA3"; ///api/info/five
+export const onlineURL = "https://maltemagnussen.com/TestExam1_1"; ///api/info/five
