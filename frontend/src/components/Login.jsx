@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import facade from "../apiFacade";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Swapi from "./Swapi.jsx";
 import { Link } from "react-router-dom";
 
 export const LogIn = ({ login, message }) => {
@@ -35,30 +34,12 @@ export const LogIn = ({ login, message }) => {
   );
 };
 
-export const LoggedIn = ({ roles }) => {
-  const [dataFromServer, setDataFromServer] = useState("");
-
-  useEffect(() => {
-    function update() {
-      facade
-        .fetchData(roles)
-        .then(res => setDataFromServer(res))
-        .catch(err => {
-          if (err.status) {
-            err.fullError.then(e => console.log(e.code, e.message));
-          } else {
-            console.log("Network error");
-          }
-        });
-    }
-    update();
-  }, []);
+export const LoggedIn = () => {
 
   return (
     <>
-      <h2>Data Received from server</h2>
-      <p>{JSON.stringify(dataFromServer)}</p>
-      <Link to="/swapi">Swapi</Link>
+      <h2>You are now logged in</h2>
+      <Link to="/search">Searching tool</Link>
       <br></br>
       <br></br>
     </>

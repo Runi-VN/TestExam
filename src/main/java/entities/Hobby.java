@@ -59,9 +59,6 @@ public class Hobby implements Serializable {
         this.id = hobby.getId();
         this.name = hobby.getHobbyName();
         this.description = hobby.getHobbyDescription();
-        for (PersonDTO person : hobby.getPeople()) {
-            this.persons.add(new Person(person));
-        }
     }
 
     public void addPerson(Person p) {

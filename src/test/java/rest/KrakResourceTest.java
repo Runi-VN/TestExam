@@ -5,12 +5,10 @@
  */
 package rest;
 
-import dto.HobbyDTO;
 import dto.PersonDTO;
 import entities.Address;
 import entities.Hobby;
 import entities.Person;
-import entities.RenameMe;
 import entities.Role;
 import entities.User;
 import facades.KrakFacadeIMPL;
@@ -20,10 +18,8 @@ import static io.restassured.RestAssured.with;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -41,8 +37,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import static rest.LoginEndpointTest.startServer;
 import utils.EMF_Creator;
 
 /**
@@ -53,7 +47,6 @@ public class KrakResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static RenameMe r1, r2;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;

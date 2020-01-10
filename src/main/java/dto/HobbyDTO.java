@@ -19,7 +19,6 @@ public class HobbyDTO
 {
     private int id;
     private String hobbyName, hobbyDescription;
-    private List<PersonDTO> people = new ArrayList();
 
     public HobbyDTO()
     {
@@ -30,16 +29,8 @@ public class HobbyDTO
         this.id = hobby.getId();
         this.hobbyName = hobby.getName();
         this.hobbyDescription = hobby.getDescription();
-        for (Person p : hobby.getPersons())
-        {
-            people.add(new PersonDTO(p));
-        }
     }
     
-    public void addPersonDTO(PersonDTO p) {
-        this.people.add(p);
-    }
-
     public int getId()
     {
         return id;
@@ -70,23 +61,12 @@ public class HobbyDTO
         this.hobbyDescription = hobbyDescription;
     }
 
-    public List<PersonDTO> getPeople()
-    {
-        return people;
-    }
-
-    public void setPeople(List<PersonDTO> people)
-    {
-        this.people = people;
-    }
-
     @Override
     public int hashCode()
     {
         int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.hobbyName);
-        hash = 41 * hash + Objects.hashCode(this.hobbyDescription);
-        hash = 41 * hash + Objects.hashCode(this.people);
+        hash = 79 * hash + Objects.hashCode(this.hobbyName);
+        hash = 79 * hash + Objects.hashCode(this.hobbyDescription);
         return hash;
     }
 
@@ -114,19 +94,8 @@ public class HobbyDTO
         {
             return false;
         }
-        if (!Objects.equals(this.people, other.people))
-        {
-            return false;
-        }
         return true;
     }
 
-    @Override
-    public String toString()
-    {
-        return "HobbyDTO{" + "id=" + id + ", hobbyName=" + hobbyName + ", hobbyDescription=" + hobbyDescription + ", people=" + people + '}';
-    }
-    
-    
     
 }

@@ -62,9 +62,6 @@ public class Address implements Serializable {
         this.street = residence.getRoad();
         this.city = residence.getTown();
         this.zip = residence.getZipcode();
-        for (PersonDTO person : residence.getResidents()) {
-            this.persons.add(new Person(person));
-        }
     }
     
     public void addPerson(Person p) {
