@@ -1,6 +1,5 @@
 package rest;
 
-import entities.RenameMe;
 import entities.User;
 import entities.Role;
 
@@ -28,7 +27,6 @@ public class LoginEndpointTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static RenameMe r1, r2;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -119,6 +117,7 @@ public class LoginEndpointTest {
         given().when().get("/info").then().statusCode(200);
     }
 
+    @Disabled
     @Test
     public void testFiveSwapi() {
         login("admin", "test");

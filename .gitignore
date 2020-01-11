@@ -23,3 +23,9 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+.settings/
+
+.classpath
+.project
+.factorypath

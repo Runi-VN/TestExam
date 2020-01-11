@@ -20,7 +20,6 @@ public class AddressDTO
     private int id;
     private String road, town;
     private int zipcode;
-    private List<PersonDTO> residents = new ArrayList();
 
     public AddressDTO()
     {
@@ -32,16 +31,8 @@ public class AddressDTO
         this.road = address.getStreet();
         this.town = address.getCity();
         this.zipcode = address.getZip();
-        for (Person p : address.getPersons())
-        {
-            residents.add(new PersonDTO(p));
-        }
     }
     
-    public void addPersonDTO(PersonDTO p) {
-        this.residents.add(p);
-    }
-
     public int getId()
     {
         return id;
@@ -82,24 +73,13 @@ public class AddressDTO
         this.zipcode = zipcode;
     }
 
-    public List<PersonDTO> getResidents()
-    {
-        return residents;
-    }
-
-    public void setResidents(List<PersonDTO> residents)
-    {
-        this.residents = residents;
-    }
-
     @Override
     public int hashCode()
     {
-        int hash = 5;
-        hash = 83 * hash + Objects.hashCode(this.road);
-        hash = 83 * hash + Objects.hashCode(this.town);
-        hash = 83 * hash + this.zipcode;
-        hash = 83 * hash + Objects.hashCode(this.residents);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.road);
+        hash = 37 * hash + Objects.hashCode(this.town);
+        hash = 37 * hash + this.zipcode;
         return hash;
     }
 
@@ -131,18 +111,8 @@ public class AddressDTO
         {
             return false;
         }
-        if (!Objects.equals(this.residents, other.residents))
-        {
-            return false;
-        }
         return true;
     }
 
-    @Override
-    public String toString()
-    {
-        return "AddressDTO{" + "id=" + id + ", road=" + road + ", town=" + town + ", zipcode=" + zipcode + ", residents=" + residents + '}';
-    }
-    
     
 }
